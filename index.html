@@ -95,13 +95,14 @@
     // color: warna segmen (boleh biar null untuk auto).
     // weight: kebarangkalian relatif (default 1 setiap item).
     const PRIZES = [
-      { label: "RM2 OFF",        code: "RM2 OFF — Min order RM20",  color: "#0ea5e9", weight: 1 },
-      { label: "5% OFF",         code: "KOD: SAUDAGAR5 — Diskaun 5%", color: "#22c55e", weight: 1 },
-      { label: "Free TOPSIDE",  code: "PERCUMA TOPSIDE STEAK", color: "#f59e0b", weight: 1 },
-      { label: "FREE BANANA",    code: "FREE GRILLED BANANA", color: "#a78bfa", weight: 1 },
-      { label: "30% OFF",         code: "KOD: SAUDAGAR7 — Diskaun 7%", color: "#ef4444", weight: 1 },
-      { label: "SAUDAGAR BELANJA",    code: "TAKPAYAH BAYAR - Saudagar Belanja", color: "#14b8a6", weight: 0.35 } // odds lebih rendah
-    ];
+  { label: "RM2 OFF",         code: "RM2 OFF — Min order RM20",              color: "#0ea5e9", weight: 1 },
+  { label: "5% OFF",          code: "KOD: SAUDAGAR5 — Diskaun 5%",           color: "#22c55e", weight: 1 },
+  { label: "Free TOPSIDE",    code: "PERCUMA TOPSIDE STEAK",                 color: "#f59e0b", weight: 0.6 },
+  { label: "FREE BANANA",     code: "FREE GRILLED BANANA",                   color: "#a78bfa", weight: 1 },
+  { label: "30% OFF",         code: "KOD: SAUDAGAR30 — Diskaun 30%",         color: "#ef4444", weight: 0.4 },
+  { label: "SAUDAGAR BELANJA",code: "TAKPAYAH BAYAR — Saudagar Belanja",     color: "#14b8a6", weight: 0.05 } // super rare
+];
+
 
     const STORAGE = {
       claimed: "wheel_claimed_v1",
@@ -265,3 +266,4 @@
   </script>
 </body>
 </html>
+
