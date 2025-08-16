@@ -3,113 +3,265 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Promo Nasib-Nasib 🎁</title>
+  <title>Wheel of Promo — Nasib-Nasib 🎁</title>
   <style>
-    :root{--bg:#0f172a;--card:#111827;--text:#e5e7eb;--muted:#9ca3af;--accent:#22c55e;}
-    *{box-sizing:border-box} body{margin:0;background:radial-gradient(1200px 600px at 20% -10%,#1e293b,transparent),radial-gradient(900px 500px at 120% 10%,#0b1220,transparent),var(--bg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-    .wrap{min-height:100vh;display:grid;place-items:center;padding:24px}
-    .card{width:100%;max-width:460px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px);border-radius:20px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
-    h1{color:var(--text);font-size:26px;margin:0 0 8px}
-    p{color:var(--muted);margin:0 0 16px;line-height:1.5}
-    .btn{width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,#16a34a,#15803d);color:white;font-weight:700;font-size:16px;cursor:pointer;transition:.2s;box-shadow:0 8px 20px rgba(34,197,94,.25)}
+    :root{
+      --bg:#0f172a;--panel:#111827;--text:#e5e7eb;--muted:#94a3b8;
+      --accent:#22c55e;--accent2:#16a34a;
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{
+      margin:0;background:
+        radial-gradient(1200px 600px at 20% -10%,#1e293b,transparent),
+        radial-gradient(900px 500px at 120% 10%,#0b1220,transparent),var(--bg);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--text);
+    }
+    .wrap{min-height:100dvh;display:grid;place-items:center;padding:24px}
+    .card{
+      width:min(820px,calc(100vw - 32px));
+      background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px);
+      border-radius:20px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.25)
+    }
+    h1{margin:0 0 6px;font-size:26px}
+    p{margin:0 0 14px;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr;gap:18px}
+    @media (min-width:840px){.grid{grid-template-columns:1.1fr .9fr}}
+    .panel{
+      background:#0b1220;border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;padding:14px
+    }
+    .wheel-wrap{display:grid;place-items:center;padding:8px}
+    canvas{max-width:100%;height:auto}
+    .needle{
+      width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;
+      border-bottom:24px solid #f59e0b;margin-inline:auto;filter:drop-shadow(0 2px 0 rgba(0,0,0,.35))
+    }
+    .btn{
+      width:100%;padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg,var(--accent),var(--accent2));color:white;font-weight:700;font-size:16px;
+      cursor:pointer;transition:.2s;box-shadow:0 8px 20px rgba(34,197,94,.25)
+    }
     .btn:hover{transform:translateY(-1px)}
     .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
-    .code{margin-top:14px;padding:14px;border-radius:12px;background:#0b1220;border:1px dashed rgba(255,255,255,.18);color:#d1fae5;font-weight:700;text-align:center;font-size:18px;letter-spacing:.4px}
-    .small{font-size:12px;color:var(--muted);margin-top:10px}
-    .footer{margin-top:16px;display:flex;justify-content:space-between;align-items:center}
-    .badge{font-size:12px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.35);color:#86efac;padding:6px 10px;border-radius:999px}
+    .code{
+      margin-top:12px;padding:14px;border-radius:12px;background:#0b1220;
+      border:1px dashed rgba(255,255,255,.18);color:#d1fae5;font-weight:700;text-align:center;
+      font-size:18px;letter-spacing:.4px
+    }
+    .row{display:flex;gap:10px;align-items:center;justify-content:space-between}
+    .badge{font-size:12px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.35);
+      color:#86efac;padding:6px 10px;border-radius:999px}
+    .small{font-size:12px;color:var(--muted)}
+    .list{display:grid;gap:8px;margin-top:6px}
+    .pill{display:flex;align-items:center;gap:8px;background:#0b1220;border:1px solid rgba(255,255,255,.08);
+      padding:8px 10px;border-radius:999px;font-size:13px}
+    .swatch{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.25)}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="card">
-      <h1>🎁 Promo Nasib-Nasib</h1>
-      <p>Tekan butang di bawah untuk dapat <strong>promo rawak</strong>. Setiap peranti hanya boleh tebus <strong>sekali</strong>.</p>
+      <h1>🎡 Wheel of Promo — Nasib-Nasib</h1>
+      <p>Pusing roda untuk dapat <strong>promo rawak</strong>. Setiap peranti boleh tebus <strong>sekali</strong> sahaja.</p>
 
-      <button id="claimBtn" class="btn">Dapatkan Promo</button>
-      <div id="result" class="code" style="display:none"></div>
-      <div class="footer">
-        <span id="claimedBadge" class="badge" style="display:none">Promo sudah ditebus</span>
-        <span class="small" id="visitNote"></span>
+      <div class="grid">
+        <!-- LEFT: WHEEL -->
+        <div class="panel wheel-wrap">
+          <div class="needle"></div>
+          <canvas id="wheel" width="520" height="520" aria-label="Wheel of Promo"></canvas>
+          <button id="spinBtn" class="btn" style="max-width:360px;margin:10px auto 0">Pusing Sekarang</button>
+          <div id="result" class="code" style="display:none"></div>
+          <div class="row" style="margin-top:10px">
+            <span id="claimedBadge" class="badge" style="display:none">Promo sudah ditebus</span>
+            <span class="small" id="visitNote"></span>
+          </div>
+        </div>
+
+        <!-- RIGHT: INFO -->
+        <div class="panel">
+          <h3 style="margin:6px 0 8px">Hadiah Dalam Roda</h3>
+          <div id="prizeList" class="list"></div>
+          <p class="small" style="margin-top:14px">Terma ringkas: Promo rawak, tidak boleh ditukar. Tunjuk skrin ini di kaunter semasa pembayaran.</p>
+        </div>
       </div>
-      <p class="small">Terma ringkas: Promo rawak, tidak boleh ditukar. Tunjuk skrin ini di kaunter semasa pembayaran.</p>
     </div>
   </div>
 
   <script>
-    // ================== KONFIGURASI ==================
-    // Edit senarai promo anda di sini. Anda boleh guna teks ringkas atau "KOD: DISKAUN".
-    const PROMOS = [
-      "KOD: SAUDAGAR5 — Diskaun 5%",
-      "KOD: SAUDAGAR7 — Diskaun 7%",
-      "KOD: SAUDAGAR10 — Diskaun 10%",
-      "FREE ICED TEA — Dengan sebarang pembelian",
-      "UPSIZE PERCUMA — Minuman sahaja",
-      "RM2 OFF — Min order RM20",
-      "RM5 OFF — Min order RM40",
-      "KUIH FREE — Selagi stok masih ada"
+    // =============== KONFIGURASI (EDIT SINI) ==================
+    // label: teks yang dipaparkan. code: apa nak ditunjuk bila menang.
+    // color: warna segmen (boleh biar null untuk auto).
+    // weight: kebarangkalian relatif (default 1 setiap item).
+    const PRIZES = [
+      { label: "RM2 OFF",        code: "RM2 OFF — Min order RM20",  color: "#0ea5e9", weight: 1 },
+      { label: "5% OFF",         code: "KOD: SAUDAGAR5 — Diskaun 5%", color: "#22c55e", weight: 1 },
+      { label: "Free TOPSIDE",  code: "PERCUMA TOPSIDE STEAK", color: "#f59e0b", weight: 1 },
+      { label: "FREE BANANA",    code: "FREE GRILLED BANANA", color: "#a78bfa", weight: 1 },
+      { label: "30% OFF",         code: "KOD: SAUDAGAR7 — Diskaun 7%", color: "#ef4444", weight: 1 },
+      { label: "SAUDAGAR BELANJA",    code: "TAKPAYAH BAYAR - Saudagar Belanja", color: "#14b8a6", weight: 0.35 } // odds lebih rendah
     ];
 
-    // Pilihan odds (optional). Jika nak peluang tak sama, set weight ikut index PROMOS.
-    // Kalau semua sama rata, biar null.
-    const WEIGHTS = null; // contoh: [1,1,1,1,1,0.6,0.4,0.8]
+    const STORAGE = {
+      claimed: "wheel_claimed_v1",
+      prize: "wheel_prize_v1",
+      visits: "wheel_visits_v1",
+      angle: "wheel_angle_v1"
+    };
+    // ==========================================================
 
-    // Kunci untuk localStorage
-    const KEY_CLAIMED = "promo_claimed_v1";
-    const KEY_PROMO = "promo_code_v1";
-    const KEY_VISITS = "promo_visits_v1";
-    // ================================================
-
-    // Util pilih rawak ikut weight (jika ada)
-    function weightedRandom(items, weights) {
-      if (!weights) {
-        return items[Math.floor(Math.random() * items.length)];
-      }
+    // ---------- Util kebarangkalian ----------
+    function pickWeighted(items){
+      const weights = items.map(p => p.weight ?? 1);
       const sum = weights.reduce((a,b)=>a+b,0);
       let r = Math.random() * sum;
-      for (let i=0;i<items.length;i++){
-        if ((r -= weights[i]) < 0) return items[i];
-      }
+      for(let i=0;i<items.length;i++){ r -= weights[i]; if(r<=0) return items[i]; }
       return items[items.length-1];
     }
 
-    function pickRandomPromo() {
-      return weightedRandom(PROMOS, WEIGHTS || Array(PROMOS.length).fill(1));
-    }
-
-    // Inisialisasi lawatan
-    const visits = Number(localStorage.getItem(KEY_VISITS) || 0) + 1;
-    localStorage.setItem(KEY_VISITS, String(visits));
+    // ---------- Setup lawatan / UI ----------
+    const visits = Number(localStorage.getItem(STORAGE.visits) || 0) + 1;
+    localStorage.setItem(STORAGE.visits, String(visits));
     document.getElementById("visitNote").textContent = "Lawatan #" + visits;
 
-    const claimed = localStorage.getItem(KEY_CLAIMED) === "1";
+    const wheel = document.getElementById("wheel");
+    const ctx = wheel.getContext("2d");
+    const radius = wheel.width/2;
+    const center = {x: radius, y: radius};
+
+    // Auto warna jika tiada
+    function autoColor(i,n){
+      const hue = Math.round((360/n)*i);
+      return `hsl(${hue} 70% 50%)`;
+    }
+
+    // Lukis senarai hadiah di panel kanan
+    const list = document.getElementById("prizeList");
+    PRIZES.forEach((p,i)=>{
+      const div = document.createElement("div");
+      div.className = "pill";
+      const sw = document.createElement("span");
+      sw.className = "swatch";
+      sw.style.background = p.color || autoColor(i, PRIZES.length);
+      const txt = document.createElement("span");
+      txt.textContent = `${p.label} ${p.weight && p.weight!==1 ? `(×${p.weight})` : ""}`;
+      div.appendChild(sw); div.appendChild(txt);
+      list.appendChild(div);
+    });
+
+    // Lukis roda
+    function drawWheel(angle=0){
+      const n = PRIZES.length;
+      const arc = (Math.PI * 2) / n;
+      ctx.clearRect(0,0,wheel.width,wheel.height);
+
+      for(let i=0;i<n;i++){
+        const start = i*arc + angle;
+        const end   = start + arc;
+        ctx.beginPath();
+        ctx.moveTo(center.x, center.y);
+        ctx.arc(center.x, center.y, radius-6, start, end);
+        ctx.closePath();
+        ctx.fillStyle = PRIZES[i].color || autoColor(i,n);
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "rgba(0,0,0,.35)";
+        ctx.stroke();
+
+        // Label
+        ctx.save();
+        ctx.translate(center.x, center.y);
+        ctx.rotate(start + arc/2);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "#0b1220";
+        ctx.font = "bold 16px system-ui, -apple-system, Segoe UI";
+        ctx.fillText(PRIZES[i].label, radius - 20, 6);
+        ctx.restore();
+      }
+
+      // Rim tengah
+      ctx.beginPath();
+      ctx.arc(center.x, center.y, 54, 0, Math.PI*2);
+      ctx.fillStyle = "#111827";
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = "rgba(255,255,255,.12)";
+      ctx.stroke();
+    }
+
+    // Tentukan segmen di mana jarum (atas) menunjuk
+    function indexFromAngle(angle){
+      // jarum di atas (0 rad menghala ke kanan), jadi kita offset -90°
+      const adjusted = (Math.PI*1.5 - angle) % (Math.PI*2);
+      const arc = (Math.PI * 2) / PRIZES.length;
+      let idx = Math.floor(adjusted / arc);
+      if (idx < 0) idx += PRIZES.length;
+      return idx % PRIZES.length;
+    }
+
+    // Animasi pusing
+    let currentAngle = Number(localStorage.getItem(STORAGE.angle) || 0);
+    drawWheel(currentAngle);
+
+    const btn = document.getElementById("spinBtn");
     const resultEl = document.getElementById("result");
-    const btn = document.getElementById("claimBtn");
     const badge = document.getElementById("claimedBadge");
 
-    function showClaimed(promo) {
+    function showClaimed(text){
       resultEl.style.display = "block";
-      resultEl.textContent = promo;
+      resultEl.textContent = text;
       btn.disabled = true;
       badge.style.display = "inline-block";
     }
 
-    if (claimed) {
-      const saved = localStorage.getItem(KEY_PROMO) || "Promo anda telah direkodkan.";
+    // Jika dah claim, paparkan semula
+    if(localStorage.getItem(STORAGE.claimed) === "1"){
+      const saved = localStorage.getItem(STORAGE.prize) || "Promo anda telah direkodkan.";
       showClaimed(saved);
     }
 
-    btn.addEventListener("click", () => {
-      if (localStorage.getItem(KEY_CLAIMED) === "1") return;
-      const promo = pickRandomPromo();
-      localStorage.setItem(KEY_CLAIMED, "1");
-      localStorage.setItem(KEY_PROMO, promo);
-      showClaimed(promo);
-    });
+    function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
 
-    // Bonus: auto-claim untuk UX “sekali tekan”
-    // Jika nak claim automatik bila buka page, uncomment di bawah:
-    // if (!claimed) btn.click();
+    btn.addEventListener("click", ()=>{
+      if(localStorage.getItem(STORAGE.claimed) === "1") return;
+
+      // Pilih hadiah ikut weight
+      const chosen = pickWeighted(PRIZES);
+      const targetIndex = PRIZES.indexOf(chosen);
+
+      // Kira sudut akhir supaya jarum berhenti tepat pada segmen terpilih
+      const n = PRIZES.length;
+      const arc = (Math.PI * 2) / n;
+      // jarum di atas → pusat segmen ialah angle sasar: Math.PI*1.5 - (targetIndex + 0.5)*arc
+      let targetAngle = (Math.PI*1.5) - (targetIndex + 0.5)*arc;
+
+      // Tambah beberapa pusingan penuh untuk efek
+      const spins = 5 + Math.floor(Math.random()*3); // 5–7 pusingan
+      const finalAngle = targetAngle + spins * Math.PI * 2;
+
+      const duration = 3600; // ms
+      const start = performance.now();
+      const startAngle = currentAngle;
+
+      btn.disabled = true;
+
+      function animate(now){
+        const t = Math.min(1, (now - start)/duration);
+        const eased = easeOutCubic(t);
+        currentAngle = startAngle + (finalAngle - startAngle) * eased;
+        drawWheel(currentAngle);
+        if(t < 1){ requestAnimationFrame(animate); }
+        else{
+          // Kunci hadiah
+          localStorage.setItem(STORAGE.claimed, "1");
+          localStorage.setItem(STORAGE.prize, chosen.code);
+          localStorage.setItem(STORAGE.angle, String(currentAngle % (Math.PI*2)));
+          showClaimed(chosen.code);
+        }
+      }
+      requestAnimationFrame(animate);
+    });
   </script>
 </body>
 </html>
